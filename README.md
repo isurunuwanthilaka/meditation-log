@@ -4,6 +4,7 @@ Cross-platform meditation journal with:
 - **Web**: Next.js app deployable to Vercel
 - **Mobile**: Expo React Native app for Android/iOS
 - **Shared package**: cross-platform schemas/types
+- **Pricing**: single paid plan at **$1/month** (no add-ons or tiers)
 
 ## Monorepo layout
 
