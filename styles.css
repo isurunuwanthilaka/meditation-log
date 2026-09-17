@@ -1,0 +1,51 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #122;
+  background: #f5f8f6;
+}
+
+body {
+  margin: 0;
+  padding: 1.5rem;
+}
+
+header {
+  margin-bottom: 1rem;
+}
+
+.pricing {
+  margin-top: 0.25rem;
+}
+
+main {
+  display: grid;
+  gap: 1rem;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #dbe4de;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.timer {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+button,
+input {
+  padding: 0.5rem;
+}
+
+.list {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}

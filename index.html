@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meditation Log</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Meditation Log</h1>
+      <p class="pricing">Subscription: <strong>$1/month</strong> (single plan, no tiers, no add-ons)</p>
+    </header>
+
+    <main>
+      <section class="card" aria-labelledby="timer-title">
+        <h2 id="timer-title">Meditation Timer</h2>
+        <p id="timer-display" class="timer" aria-live="polite">00:00</p>
+        <div class="actions">
+          <button id="start-btn" type="button">Start</button>
+          <button id="pause-btn" type="button">Pause</button>
+          <button id="reset-btn" type="button">Reset</button>
+          <button id="save-btn" type="button">Save Session</button>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="records-title">
+        <h2 id="records-title">Session Records</h2>
+        <ul id="records-list" class="list"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="newsfeed-title">
+        <h2 id="newsfeed-title">Reading Newsfeed</h2>
+        <form id="newsfeed-form">
+          <label for="newsfeed-input">Push reading material</label>
+          <div class="actions">
+            <input id="newsfeed-input" name="newsfeed" type="text" required placeholder="Share a reading recommendation" />
+            <button type="submit">Publish</button>
+          </div>
+        </form>
+        <ul id="newsfeed-list" class="list"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
