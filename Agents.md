@@ -1,6 +1,6 @@
 # Agents
 
-This project is built and maintained by coding agents.
+This project is built and maintained by coding agents, with separate web, mobile, and shared workspaces.
 
 ## Agent responsibilities
 - Implement product requirements with minimal, focused code changes.

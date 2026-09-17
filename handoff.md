@@ -1,19 +1,14 @@
 # Handoff
 
 ## What was implemented
-- Added a minimal web app with:
-  - Meditation timer (start/pause/reset).
-  - Session record saving and display.
-  - Reading newsfeed publishing and display.
-  - Explicit single-plan pricing message: $1/month.
-- Persisted records and feed items using browser localStorage.
+- Initialized monorepo structure for web, mobile, and shared packages.
+- Added shared schemas/types for meditation logs.
+- Added Next.js API routes and web UI for creating/listing/deleting logs.
+- Added Expo mobile client that consumes the same API.
+- Added Vercel and EAS deployment configuration and CI workflow.
+- Preserved and carried forward the single-plan pricing requirement ($1/month, no tiers/add-ons).
 
-## Files added
-- `/home/runner/work/meditation-log/meditation-log/index.html`
-- `/home/runner/work/meditation-log/meditation-log/styles.css`
-- `/home/runner/work/meditation-log/meditation-log/app.js`
-- `/home/runner/work/meditation-log/meditation-log/Agents.md`
-
-## Notes for next agent
-- Current app is static and client-side only.
-- If backend/payment integration is later required, keep the single $1/month no-tier rule unchanged.
+## Next steps
+- Configure real Postgres credentials on Vercel.
+- Set `EXPO_PUBLIC_API_BASE_URL` for mobile runtime.
+- Replace placeholder EAS project ID and verify store submission metadata.
