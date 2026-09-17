@@ -1,0 +1,7 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build --workspace @meditation-log/web",
+  "installCommand": "npm install",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- .",
+  "outputDirectory": "apps/web/.next"
+}
