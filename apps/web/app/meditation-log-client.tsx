@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { MeditationLog, MoodOptions } from "@meditation-log/shared";
 
 type FormState = {
@@ -18,14 +18,32 @@ const initialForm: FormState = {
   mood: "calm",
   notes: "",
 };
+const OWNER_STORAGE_KEY = "meditation-log-owner-id";
 
 export function MeditationLogClient({ initialLogs }: { initialLogs: MeditationLog[] }) {
   const [logs, setLogs] = useState<MeditationLog[]>(initialLogs);
   const [form, setForm] = useState<FormState>(initialForm);
   const [error, setError] = useState<string | null>(null);
+  const ownerId = useMemo(() => {
+    const existing = window.localStorage.getItem(OWNER_STORAGE_KEY);
+    if (existing) {
+      return existing;
+    }
+
+    const created = crypto.randomUUID();
+    window.localStorage.setItem(OWNER_STORAGE_KEY, created);
+    return created;
+  }, []);
+
+  useEffect(() => {
+    void loadLogs();
+  }, [ownerId]);
 
   async function loadLogs() {
-    const response = await fetch("/api/logs", { cache: "no-store" });
+    const response = await fetch("/api/logs", {
+      cache: "no-store",
+      headers: { "x-owner-id": ownerId },
+    });
     const data = await response.json();
     setLogs(data.logs ?? []);
   }
@@ -36,7 +54,7 @@ export function MeditationLogClient({ initialLogs }: { initialLogs: MeditationLo
 
     const response = await fetch("/api/logs", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-owner-id": ownerId },
       body: JSON.stringify(form),
     });
 
@@ -50,7 +68,7 @@ export function MeditationLogClient({ initialLogs }: { initialLogs: MeditationLo
   }
 
   async function removeLog(id: string) {
-    await fetch(`/api/logs/${id}`, { method: "DELETE" });
+    await fetch(`/api/logs/${id}`, { method: "DELETE", headers: { "x-owner-id": ownerId } });
     await loadLogs();
   }
 
