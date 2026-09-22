@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { MeditationLog, MoodOptions } from "@meditation-log/shared";
 
 type FormState = {
@@ -24,7 +24,11 @@ export function MeditationLogClient({ initialLogs }: { initialLogs: MeditationLo
   const [logs, setLogs] = useState<MeditationLog[]>(initialLogs);
   const [form, setForm] = useState<FormState>(initialForm);
   const [error, setError] = useState<string | null>(null);
-  const ownerId = useMemo(() => {
+  const [ownerId] = useState<string | null>(() => {
+    if (typeof window === "undefined") {
+      return null;
+    }
+
     const existing = window.localStorage.getItem(OWNER_STORAGE_KEY);
     if (existing) {
       return existing;
@@ -33,16 +37,19 @@ export function MeditationLogClient({ initialLogs }: { initialLogs: MeditationLo
     const created = crypto.randomUUID();
     window.localStorage.setItem(OWNER_STORAGE_KEY, created);
     return created;
-  }, []);
+  });
 
   useEffect(() => {
-    void loadLogs();
+    if (!ownerId) {
+      return;
+    }
+    void loadLogs(ownerId);
   }, [ownerId]);
 
-  async function loadLogs() {
+  async function loadLogs(currentOwnerId: string) {
     const response = await fetch("/api/logs", {
       cache: "no-store",
-      headers: { "x-owner-id": ownerId },
+      headers: { "x-owner-id": currentOwnerId },
     });
     const data = await response.json();
     setLogs(data.logs ?? []);
@@ -51,6 +58,10 @@ export function MeditationLogClient({ initialLogs }: { initialLogs: MeditationLo
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+
+    if (!ownerId) {
+      return;
+    }
 
     const response = await fetch("/api/logs", {
       method: "POST",
@@ -64,12 +75,15 @@ export function MeditationLogClient({ initialLogs }: { initialLogs: MeditationLo
     }
 
     setForm(initialForm);
-    await loadLogs();
+    await loadLogs(ownerId);
   }
 
   async function removeLog(id: string) {
+    if (!ownerId) {
+      return;
+    }
     await fetch(`/api/logs/${id}`, { method: "DELETE", headers: { "x-owner-id": ownerId } });
-    await loadLogs();
+    await loadLogs(ownerId);
   }
 
   return (
