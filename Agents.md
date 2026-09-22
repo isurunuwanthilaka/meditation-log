@@ -17,3 +17,4 @@ Setup, env vars, and deployment steps: `README.md`.
 - Keep meditation log create/list/delete working across web and mobile.
 - Preserve the pricing model: $1/month, single plan, no additional tiers or add-ons.
 - Update `handoff.md` after meaningful changes so the next agent can continue quickly.
+- Before finishing any change, run `npm run lint` and `npm test` from the repo root (add `npm run typecheck` too when touching types) and fix anything they catch. These are also required GitHub Actions checks (`.github/workflows/ci.yml`) on every PR into `main` — a PR can't merge until they're green.

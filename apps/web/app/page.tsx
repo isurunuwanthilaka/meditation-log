@@ -1,7 +1,8 @@
 import { MeditationLogClient } from "./meditation-log-client";
-import { listLogs } from "@/lib/log-store";
+import type { MeditationLog } from "@meditation-log/shared";
 
 export default async function Home() {
-  const logs = await listLogs();
-  return <MeditationLogClient initialLogs={logs} />;
+  // The client fetches its own logs (scoped to the current owner) on mount.
+  const initialLogs: MeditationLog[] = [];
+  return <MeditationLogClient initialLogs={initialLogs} />;
 }
