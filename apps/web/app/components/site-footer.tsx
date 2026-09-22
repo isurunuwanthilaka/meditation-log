@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { signOut } from "@/app/login/actions";
 
 export function SiteFooter() {
@@ -19,9 +20,9 @@ export function SiteFooter() {
           Still Hour
         </span>
         <span>A community of people keeping a daily practice.</span>
-        <a href="#" style={{ marginLeft: "auto" }}>
+        <Link href="/guidelines" style={{ marginLeft: "auto" }}>
           Guidelines
-        </a>
+        </Link>
         <a href="#">Contact</a>
         <form action={signOut}>
           <button
